@@ -23,7 +23,7 @@ app.use(trimMiddleware);
 app.use(cookieParser());
 
 app.use('/api/auth', authRouter);
-app.use('/api/posts', auth, postsRouter);
+app.use('/api/posts', postsRouter);
 app.use('/api/subs', auth, subsRouter);
 app.use(errorMiddleware);
 
