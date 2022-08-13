@@ -5,7 +5,7 @@ import cookie from 'cookie';
 import { Request, Response } from 'express';
 import { validate, isEmpty } from 'class-validator';
 import { StatusCodes } from 'http-status-codes';
-import { User } from '../entities/User';
+import User from '../entities/User';
 
 export const register = async (req: Request, res: Response) => {
   const { username, email, password } = req.body;

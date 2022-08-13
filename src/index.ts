@@ -8,7 +8,10 @@ import 'express-async-errors';
 import { AppDataSource } from './data-source';
 import { errorMiddleware } from './middleware/error';
 import { trimMiddleware } from './middleware/trim';
+import { auth } from './middleware/auth';
 import authRouter from './routes/auth';
+import postsRouter from './routes/posts';
+import subsRouter from './routes/subs';
 
 const app = express();
 
@@ -20,6 +23,8 @@ app.use(trimMiddleware);
 app.use(cookieParser());
 
 app.use('/api/auth', authRouter);
+app.use('/api/posts', auth, postsRouter);
+app.use('/api/subs', auth, subsRouter);
 app.use(errorMiddleware);
 
 app.listen(PORT, async () => {
