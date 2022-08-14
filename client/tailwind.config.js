@@ -22,6 +22,7 @@ module.exports = {
           900: '#00182a',
         },
       },
+      container: false,
     },
     plugins: [],
   },

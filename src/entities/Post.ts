@@ -7,6 +7,7 @@ import {
   OneToMany,
   JoinColumn,
 } from 'typeorm';
+import { Expose } from 'class-transformer';
 
 import Entity from './Entity';
 import User from './User';
@@ -37,6 +38,13 @@ export default class Post extends Entity {
 
   @Column()
   subName: string;
+
+  @Column()
+  username: string;
+
+  @Expose() get url(): string {
+    return `/r/${this.subName}/${this.identifier}/${this.slug}`;
+  }
 
   @ManyToOne(() => User, (user) => user.posts)
   @JoinColumn({ name: 'username', referencedColumnName: 'username' })

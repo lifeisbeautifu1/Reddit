@@ -16,7 +16,7 @@ const Navbar = () => {
           <Link href="/">Reddit</Link>
         </span>
       </div>
-      <div className="flex items-center bg-gray-100 border rounded hover:border-blue-500 hover:bg-white">
+      <div className="items-center hidden bg-gray-100 border rounded lg:flex hover:border-blue-500 hover:bg-white">
         <span className="pl-4 pr-3 text-gray-500">
           <FaSearch />
         </span>
