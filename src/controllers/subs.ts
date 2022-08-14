@@ -4,6 +4,7 @@ import { StatusCodes } from 'http-status-codes';
 
 import User from '../entities/User';
 import Sub from '../entities/Sub';
+import Post from '../entities/Post';
 import { AppDataSource } from '../data-source';
 
 export const createSub = async (req: Request, res: Response) => {
@@ -30,4 +31,24 @@ export const createSub = async (req: Request, res: Response) => {
   sub = new Sub({ name, description, title, user });
   await sub.save();
   res.json(sub);
+};
+
+export const getSub = async (req: Request, res: Response) => {
+  const { name } = req.params;
+
+  const sub = await Sub.findOneByOrFail({ name });
+
+  const posts = await Post.find({
+    where: { subName: name },
+    order: { createdAt: 'DESC' },
+    relations: ['comments', 'votes'],
+  });
+
+  sub.posts = posts;
+
+  if (res.locals.user) {
+    sub.posts.forEach((p) => p.setUserVote(res.locals.user));
+  }
+
+  return res.json(sub);
 };

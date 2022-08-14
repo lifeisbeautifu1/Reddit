@@ -14,6 +14,10 @@ export interface IPost {
   userVote?: number;
 }
 
+export interface ISub {
+  posts: IPost[];
+}
+
 export interface IUser {
   username: string;
   email: string;

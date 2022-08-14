@@ -15,7 +15,9 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
     <AuthProvider>
       {!isAuth && <Navbar />}
-      <Component {...pageProps} />
+      <div className={isAuth ? '' : 'pt-12'}>
+        <Component {...pageProps} />
+      </div>
     </AuthProvider>
   );
 }
