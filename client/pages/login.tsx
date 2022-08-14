@@ -5,12 +5,10 @@ import Head from 'next/head';
 import Link from 'next/link';
 import axios from 'axios';
 
-const Register: NextPage = () => {
+const Login: NextPage = () => {
   const [formState, setFormState] = useState({
     username: '',
-    email: '',
     password: '',
-    agreement: false,
   });
   const [errors, setErrors] = useState<any>({});
 
@@ -20,8 +18,8 @@ const Register: NextPage = () => {
     e.preventDefault();
 
     try {
-      await axios.post('/auth/register', formState);
-      router.push('/login');
+      await axios.post('/auth/login', formState);
+      router.push('/');
     } catch (error: any) {
       setErrors(error.response.data);
     }
@@ -30,14 +28,13 @@ const Register: NextPage = () => {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormState({
       ...formState,
-      [e.target.name]:
-        e.target.type === 'checkbox' ? e.target.checked : e.target.value,
+      [e.target.name]: e.target.value,
     });
   };
   return (
     <div className="flex">
       <Head>
-        <title>Register</title>
+        <title>Login</title>
       </Head>
       <div
         className="h-screen bg-center bg-cover w-36"
@@ -45,37 +42,11 @@ const Register: NextPage = () => {
       ></div>
       <div className="flex flex-col justify-center pl-6">
         <div className="w-[18rem]">
-          <h1 className="mb-2 text-lg font-medium">Sign Up</h1>
+          <h1 className="mb-2 text-lg font-medium">Login</h1>
           <p className="mb-10 text-xs">
             By continuing, you agree to our User Agreement and Privacy Policy
           </p>
           <form onSubmit={handleSubmit}>
-            <div className="flex items-center mb-6">
-              <input
-                type="checkbox"
-                className="mr-1 cursor-pointer "
-                name="agreement"
-                checked={formState.agreement}
-                onChange={handleChange}
-                id="agreement"
-              />
-              <label htmlFor="agreement" className="text-xs cursor-pointer ">
-                I agree to get emails about cool stuff on Reddit
-              </label>
-            </div>
-            <div className="mb-2">
-              <input
-                type="text"
-                className={`w-full p-3 transition duration-200 border border-gray-300 rounded outline-none bg-gray-50 focus:bg-white hover:bg-white ${
-                  errors.email && 'border-red-500'
-                }`}
-                onChange={handleChange}
-                value={formState.email}
-                name="email"
-                placeholder="Email"
-              />
-              <small className="text-red-600 font-medim">{errors.email}</small>
-            </div>
             <div className="mb-2">
               <input
                 type="text"
@@ -110,13 +81,13 @@ const Register: NextPage = () => {
               type="submit"
               className="w-full py-2 mb-4 text-sm font-bold text-white uppercase transition duration-200 bg-blue-500 border border-blue-500 rounded hover:bg-blue-500/90"
             >
-              Sign Up
+              Login
             </button>
           </form>
           <small>
-            Already a redditor?
+            Don't have an account?
             <Link href="/login">
-              <a className="ml-1 text-blue-500 uppercase">Login</a>
+              <a className="ml-1 text-blue-500 uppercase">Sign Up</a>
             </Link>
           </small>
         </div>
@@ -125,4 +96,4 @@ const Register: NextPage = () => {
   );
 };
 
-export default Register;
+export default Login;

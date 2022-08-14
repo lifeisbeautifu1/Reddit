@@ -7,6 +7,13 @@ import { validate, isEmpty } from 'class-validator';
 import { StatusCodes } from 'http-status-codes';
 import User from '../entities/User';
 
+const mapErrors = (errors: Object[]) => {
+  return errors.reduce((prev: any, err: any) => {
+    prev[err.property] = Object.entries(err.constraints)[0][1];
+    return prev;
+  }, {});
+};
+
 export const register = async (req: Request, res: Response) => {
   const { username, email, password } = req.body;
 
@@ -28,7 +35,7 @@ export const register = async (req: Request, res: Response) => {
   errors = await validate(user);
 
   if (errors.length > 0)
-    return res.status(StatusCodes.BAD_REQUEST).json(errors);
+    return res.status(StatusCodes.BAD_REQUEST).json(mapErrors(errors));
 
   await user.save();
 
@@ -50,7 +57,9 @@ export const login = async (req: Request, res: Response) => {
   const user = await User.findOneBy({ username });
 
   if (!user)
-    return res.status(StatusCodes.NOT_FOUND).json({ error: 'User not found' });
+    return res
+      .status(StatusCodes.NOT_FOUND)
+      .json({ username: 'User not found' });
 
   const isMatch = await bcrypt.compare(password, user.password);
 

@@ -1,6 +1,7 @@
 import express from 'express';
 import morgan from 'morgan';
 import cookieParser from 'cookie-parser';
+import cors from 'cors';
 import 'dotenv/config';
 import 'colors';
 import 'express-async-errors';
@@ -21,6 +22,13 @@ app.use(express.json());
 app.use(morgan('dev'));
 app.use(trimMiddleware);
 app.use(cookieParser());
+app.use(
+  cors({
+    credentials: true,
+    origin: process.env.ORIGIN,
+    optionsSuccessStatus: 200,
+  })
+);
 
 app.use('/api/auth', authRouter);
 app.use('/api/posts', postsRouter);
