@@ -1,15 +1,26 @@
 import type { GetServerSideProps, NextPage } from 'next';
 import Head from 'next/head';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
 
 import { IPost } from '../interfaces';
 import { Post } from '../components';
 
-interface HomePageProps {
-  posts: IPost[];
-}
+const Home: NextPage = ({}) => {
+  const [posts, setPosts] = useState<IPost[]>([]);
 
-const Home: NextPage<HomePageProps> = ({ posts }) => {
+  useEffect(() => {
+    const fetchPosts = async () => {
+      try {
+        const { data } = await axios.get('/posts');
+        setPosts(data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchPosts();
+  }, []);
+
   return (
     <div className="px-4 pt-12">
       <Head>
@@ -28,20 +39,20 @@ const Home: NextPage<HomePageProps> = ({ posts }) => {
   );
 };
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
-  try {
-    const { data } = await axios.get('/posts');
-
-    return {
-      props: {
-        posts: data,
-      },
-    };
-  } catch (error) {
-    return {
-      props: { error: 'Something went wrong' },
-    };
-  }
-};
+// export const getServerSideProps: GetServerSideProps = async (context) => {
+//   try {
+//     const { data } = await axios.get('/posts');
+//     console.log(data);
+//     return {
+//       props: {
+//         posts: data,
+//       },
+//     };
+//   } catch (error) {
+//     return {
+//       props: { error: 'Something went wrong' },
+//     };
+//   }
+// };
 
 export default Home;

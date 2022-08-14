@@ -10,6 +10,7 @@ import { AppDataSource } from './data-source';
 import { errorMiddleware } from './middleware/error';
 import { trimMiddleware } from './middleware/trim';
 import { auth } from './middleware/auth';
+import { user } from './middleware/user';
 import authRouter from './routes/auth';
 import postsRouter from './routes/posts';
 import subsRouter from './routes/subs';
@@ -33,8 +34,8 @@ app.use(
 
 app.use('/api/auth', authRouter);
 app.use('/api/posts', postsRouter);
-app.use('/api/subs', auth, subsRouter);
-app.use('/api/misc', auth, miscRouter);
+app.use('/api/subs', user, auth, subsRouter);
+app.use('/api/misc', miscRouter);
 app.use(errorMiddleware);
 
 app.listen(PORT, async () => {

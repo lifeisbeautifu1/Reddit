@@ -9,4 +9,7 @@ export interface IPost {
   updatedAt: string;
   // Virtual fields
   url: string;
+  voteScore?: number;
+  commentCount?: number;
+  userVote?: number;
 }

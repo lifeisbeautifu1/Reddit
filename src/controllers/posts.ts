@@ -26,7 +26,13 @@ export const createPost = async (req: Request, res: Response) => {
 };
 
 export const getPosts = async (req: Request, res: Response) => {
-  const posts = await Post.find({ order: { createdAt: 'DESC' } });
+  const posts = await Post.find({
+    order: { createdAt: 'DESC' },
+    relations: ['comments', 'votes', 'sub'],
+  });
+  if (res.locals.user) {
+    posts.forEach((p) => p.setUserVote(res.locals.user));
+  }
   res.json(posts);
 };
 

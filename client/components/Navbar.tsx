@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import RedditLogo from '../images/reddit-logo.png';
-import { FaSearch } from 'react-icons/fa';
+
 
 const Navbar = () => {
   return (
@@ -18,8 +18,22 @@ const Navbar = () => {
       </div>
       <div className="items-center hidden bg-gray-100 border rounded lg:flex hover:border-blue-500 hover:bg-white">
         <span className="pl-4 pr-3 text-gray-500">
-          <FaSearch />
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="w-5 h-5"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            strokeWidth={2}
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+            />
+          </svg>
         </span>
+
         <input
           type="text"
           placeholder="Search"
