@@ -34,7 +34,6 @@ const Post: React.FC<PostProps> = ({ post }) => {
       console.log(error);
     }
   };
-  console.log(post.userVote);
   return (
     <div key={post.identifier} className="flex mb-4 bg-white rounded">
       <div className="w-10 py-3 text-xl text-center bg-gray-200 rounded-l">
@@ -46,7 +45,7 @@ const Post: React.FC<PostProps> = ({ post }) => {
         >
           <ImArrowUp />
         </div>
-        <p className="flex items-center justify-center text-xs font-bold">
+        <p className="flex items-center justify-center my-1 text-xs font-bold">
           {post.voteScore}
         </p>
         <div

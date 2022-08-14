@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
 import axios from 'axios';
+import { useAuthState } from '../context/auth';
 
 const Register: NextPage = () => {
   const [formState, setFormState] = useState({
@@ -14,7 +15,11 @@ const Register: NextPage = () => {
   });
   const [errors, setErrors] = useState<any>({});
 
+  const { authenticated } = useAuthState();
+
   const router = useRouter();
+
+  authenticated && router.push('/');
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();

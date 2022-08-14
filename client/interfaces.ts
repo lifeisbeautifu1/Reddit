@@ -13,3 +13,9 @@ export interface IPost {
   commentCount?: number;
   userVote?: number;
 }
+
+export interface IUser {
+  username: string;
+  email: string;
+  createAd: string;
+}

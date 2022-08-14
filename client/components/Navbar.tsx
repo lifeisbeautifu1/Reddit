@@ -3,7 +3,22 @@ import Image from 'next/image';
 import RedditLogo from '../images/reddit-logo.png';
 
 
+import { useAuthState } from '../context/auth';
+import { useAuthDispatch } from '../context/auth';
+import axios from 'axios';
+
 const Navbar = () => {
+  const { authenticated, loading } = useAuthState();
+  const dispatch = useAuthDispatch();
+
+  const logout = async () => {
+    try {
+      await axios.get('/auth/logout');
+      dispatch({ type: 'LOGOUT' });
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <div className="fixed inset-x-0 top-0 z-10 flex items-center justify-between h-12 px-5 bg-white">
       <div className="flex item-center">
@@ -40,14 +55,25 @@ const Navbar = () => {
           className="py-1 pr-3 bg-transparent rounded w-[40rem] focus:outline-none"
         />
       </div>
-      <div className="flex gap-4">
-        <Link href="/login">
-          <a className="w-32 py-1 leading-5 hollow blue button">Log In</a>
-        </Link>
-        <Link href="/register">
-          <a className="w-32 py-1 leading-5 blue button">Sign Up</a>
-        </Link>
-      </div>
+      {authenticated ? (
+        <button
+          className="w-32 py-1 leading-5 hollow blue button"
+          onClick={logout}
+        >
+          Logout
+        </button>
+      ) : (
+        !loading && (
+          <div className="flex gap-4">
+            <Link href="/login">
+              <a className="w-32 py-1 leading-5 hollow blue button">Log In</a>
+            </Link>
+            <Link href="/register">
+              <a className="w-32 py-1 leading-5 blue button">Sign Up</a>
+            </Link>
+          </div>
+        )
+      )}
     </div>
   );
 };

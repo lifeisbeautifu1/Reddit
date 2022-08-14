@@ -5,6 +5,9 @@ import Head from 'next/head';
 import Link from 'next/link';
 import axios from 'axios';
 
+
+import { useAuthDispatch, useAuthState } from '../context/auth';
+
 const Login: NextPage = () => {
   const [formState, setFormState] = useState({
     username: '',
@@ -12,13 +15,18 @@ const Login: NextPage = () => {
   });
   const [errors, setErrors] = useState<any>({});
 
+  const { authenticated } = useAuthState();
   const router = useRouter();
+  const dispatch = useAuthDispatch();
+
+  authenticated && router.push('/');
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     try {
-      await axios.post('/auth/login', formState);
+      const { data } = await axios.post('/auth/login', formState);
+      dispatch({ type: 'LOGIN', payload: data });
       router.push('/');
     } catch (error: any) {
       setErrors(error.response.data);
