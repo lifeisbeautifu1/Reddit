@@ -40,6 +40,7 @@ const Navbar = () => {
   };
 
   const goToSub = (subName: string) => {
+    console.log(subName);
     router.push('/r/' + subName);
     setName('');
   };
@@ -83,10 +84,10 @@ const Navbar = () => {
         </span>
 
         <input
-          onBlur={() => {
-            setSubs([]);
-            setName('');
-          }}
+          // onBlur={() => {
+          //   setSubs([]);
+          //   setName('');
+          // }}
           type="text"
           placeholder="Search"
           value={name}

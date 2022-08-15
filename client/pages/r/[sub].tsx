@@ -125,6 +125,7 @@ const Sub = () => {
                     }`}
                     onClick={() => openFileInput('image')}
                     objectFit="contain"
+                    objectPosition="center"
                     width={80}
                     height={80}
                   />

@@ -82,7 +82,7 @@ const PostPage = () => {
         <a>
           <div
             className={`flex items-center w-full h-40 p-8 bg-white ${
-              !post?.sub?.imageUrn && 'bg-blue-500 h-24'
+              !post?.sub?.bannerUrn && 'bg-blue-500 h-24'
             }`}
             style={{
               backgroundImage: `url(${post?.sub?.bannerUrl})`,
@@ -91,10 +91,15 @@ const PostPage = () => {
               backgroundSize: 'contain',
             }}
           >
-            <div className="container flex items-center">
+            <div className="container flex items-end">
               {post && (
                 <div className="h-10 w-10 mr-2 overflow-hidden rounded-full">
-                  <Image src={post.sub?.imageUrl!} height={40} width={40} />
+                  <Image
+                    src={post.sub?.imageUrl!}
+                    objectFit="contain"
+                    height={40}
+                    width={40}
+                  />
                 </div>
               )}
               <p

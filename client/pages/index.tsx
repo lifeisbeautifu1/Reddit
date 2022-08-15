@@ -8,7 +8,46 @@ import { Post, HomeSidebar } from '../components';
 
 const Home: NextPage = ({}) => {
   const [posts, setPosts] = useState<IPost[]>([]);
+  // const [observedPost, setObservedPost] = useState('');
+  // const [currentPage, setCurrentPage] = useState(1);
   const [refetch, setRefetch] = useState(false);
+
+  // useEffect(() => {
+  //   if (!posts || !posts.length) return;
+  //   const id = posts.at(-1)?.identifier;
+
+  //   if (id !== observedPost && id) {
+  //     setObservedPost(id);
+  //     observeElement(document.getElementById(id)!);
+  //   }
+  // }, [posts]);
+
+  // const observeElement = (element: HTMLElement) => {
+  //   if (!element) return;
+  //   const observer = new IntersectionObserver(
+  //     (entries) => {
+  //       if (entries[0].isIntersecting) {
+  //         console.log('reached bottom');
+  //         setCurrentPage(currentPage + 1);
+  //         observer.unobserve(element);
+  //       }
+  //     },
+  //     { threshold: 1 }
+  //   );
+  //   observer.observe(element);
+  // };
+
+  // useEffect(() => {
+  //   const appendPosts = async () => {
+  //     try {
+  //       const { data } = await axios.get('/posts/?page=' + currentPage);
+  //       setPosts([...posts, ...data]);
+  //     } catch (error) {
+  //       console.log(error);
+  //     }
+  //   };
+  //   appendPosts();
+  // }, [currentPage]);
 
   useEffect(() => {
     const fetchPosts = async () => {
@@ -46,7 +85,7 @@ const Home: NextPage = ({}) => {
       </div>
     </div>
   );
-};
+};;
 
 // export const getServerSideProps: GetServerSideProps = async (context) => {
 //   try {
