@@ -15,6 +15,7 @@ import authRouter from './routes/auth';
 import postsRouter from './routes/posts';
 import subsRouter from './routes/subs';
 import miscRouter from './routes/misc';
+import usersRouter from './routes/users';
 
 const app = express();
 
@@ -37,6 +38,7 @@ app.use('/api/auth', authRouter);
 app.use('/api/posts', postsRouter);
 app.use('/api/subs', subsRouter);
 app.use('/api/misc', miscRouter);
+app.use('/api/users', usersRouter);
 app.use(errorMiddleware);
 
 app.listen(PORT, async () => {

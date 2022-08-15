@@ -14,6 +14,7 @@ export interface IPost {
   comments?: IComment[];
   userVote?: number;
   sub?: ISub;
+  type?: string;
 }
 
 export interface ISub {
@@ -44,4 +45,6 @@ export interface IComment {
   // Virtual fields
   voteScore: number;
   userVote: number;
+  post?: IPost;
+  type?: string;
 }
