@@ -72,6 +72,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         dispatch({ type: 'STOP_LOADING' });
       } catch (error) {
         console.log(error);
+         dispatch({ type: 'STOP_LOADING' });
       }
     };
     fetchUser();

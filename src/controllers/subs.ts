@@ -40,7 +40,10 @@ export const createSub = async (req: Request, res: Response) => {
 export const getSub = async (req: Request, res: Response) => {
   const { name } = req.params;
 
-  const sub = await Sub.findOneByOrFail({ name });
+  const sub = await Sub.findOneOrFail({
+    where: { name },
+    // relations: ['posts'],
+  });
 
   const posts = await Post.find({
     where: { subName: name },
@@ -95,7 +98,7 @@ export const uploadSubImage = async (req: Request, res: Response) => {
   await sub.save();
 
   if (oldImageUrn !== '') {
-    fs.unlinkSync(`public\\images\\${oldImageUrn}`);
+    fs.unlinkSync(`public//images//${oldImageUrn}`);
   }
 
   return res.json(sub);

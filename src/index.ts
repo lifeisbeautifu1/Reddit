@@ -35,7 +35,7 @@ app.use(
 
 app.use('/api/auth', authRouter);
 app.use('/api/posts', postsRouter);
-app.use('/api/subs', user, auth, subsRouter);
+app.use('/api/subs', subsRouter);
 app.use('/api/misc', miscRouter);
 app.use(errorMiddleware);
 

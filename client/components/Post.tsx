@@ -4,8 +4,12 @@ import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import axios from 'axios';
 import { ImArrowUp, ImArrowDown } from 'react-icons/im';
+import { useRouter } from 'next/router';
+
+import { useAuthState } from '../context/auth';
 
 import { IPost } from '../interfaces';
+import { ActionButton } from './';
 
 dayjs.extend(relativeTime);
 
@@ -13,16 +17,14 @@ interface PostProps {
   post: IPost;
 }
 
-const ActionButton = ({ children }: { children: React.ReactNode }) => {
-  return (
-    <div className="flex items-center px-1 py-1 mr-1 text-xs text-gray-400 rounded cursor-pointer hover:bg-gray-200">
-      {children}
-    </div>
-  );
-};
-
 const Post: React.FC<PostProps> = ({ post }) => {
+  const router = useRouter();
+  const { authenticated } = useAuthState();
   const vote = async (value: number) => {
+    if (!authenticated) {
+      router.push('/login');
+    }
+    if (value === post.userVote) value = 0;
     try {
       const { data } = await axios.post('/misc/vote', {
         identifier: post.identifier,
@@ -108,7 +110,7 @@ const Post: React.FC<PostProps> = ({ post }) => {
                     />
                   </svg>
                 </span>
-                <span className="font-bold">20 Comments</span>
+                <span className="font-bold">{post.commentCount} Comments</span>
               </ActionButton>
             </a>
           </Link>

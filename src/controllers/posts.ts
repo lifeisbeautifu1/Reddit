@@ -41,8 +41,15 @@ export const getPost = async (req: Request, res: Response) => {
 
   const post = await Post.findOneOrFail({
     where: { identifier, slug },
-    relations: ['sub'],
+    relations: ['sub', 'votes', 'comments', 'comments.votes'],
   });
+
+  if (res.locals.user) {
+    post.setUserVote(res.locals.user);
+    post.comments.forEach((c) => c.setUserVote(res.locals.user));
+  }
+
+
 
   res.json(post);
 };

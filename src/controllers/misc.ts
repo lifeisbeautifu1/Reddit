@@ -1,8 +1,10 @@
 import { Request, Response } from 'express';
 
+
 import Post from '../entities/Post';
 import Vote from '../entities/Vote';
 import User from '../entities/User';
+import Sub from '../entities/Sub';
 import Comment from '../entities/Comment';
 
 import { AppDataSource } from '../data-source';
@@ -67,5 +69,22 @@ export const vote = async (req: Request, res: Response) => {
 
   res.json(post);
 };
+
+export const topSubs = async (req: Request, res: Response) => {
+  const subs = await Sub.find({
+    relations: ['posts'],
+    select: {
+      name: true,
+      title: true,
+      bannerUrn: true,
+      imageUrn: true,
+    },
+  });
+
+  return res.json(
+    subs.sort((s1, s2) => s2.posts.length - s1.posts.length).slice(0, 5)
+  );
+};
+
 
 export default vote;

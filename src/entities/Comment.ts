@@ -13,7 +13,7 @@ import Post from './Post';
 import User from './User';
 import Vote from './Vote';
 
-import { Exclude } from 'class-transformer';
+import { Expose } from 'class-transformer';
 
 import { makeId } from '../utils/helpers';
 
@@ -51,8 +51,15 @@ export default class Comment extends Entity {
     this.userVote = index > -1 ? this.votes[index].value : 0;
   }
 
+  @Expose()
+  get voteScore(): number {
+    return this.votes?.reduce((prev, total) => prev + (total.value || 0), 0);
+  }
+
   @BeforeInsert()
   makeid() {
     this.identifier = makeId(8);
   }
 }
+
+

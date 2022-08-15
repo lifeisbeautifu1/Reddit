@@ -19,7 +19,7 @@ const Login: NextPage = () => {
   const router = useRouter();
   const dispatch = useAuthDispatch();
 
-  authenticated && router.push('/');
+  authenticated && router.back();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
