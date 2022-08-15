@@ -8,6 +8,7 @@ import { Post, HomeSidebar } from '../components';
 
 const Home: NextPage = ({}) => {
   const [posts, setPosts] = useState<IPost[]>([]);
+  const [refetch, setRefetch] = useState(false);
 
   useEffect(() => {
     const fetchPosts = async () => {
@@ -19,7 +20,7 @@ const Home: NextPage = ({}) => {
       }
     };
     fetchPosts();
-  }, []);
+  }, [refetch]);
 
   return (
     <div className="px-4">
@@ -29,9 +30,16 @@ const Home: NextPage = ({}) => {
         <link rel="icon" href="./favicon.ico" />
       </Head>
       <div className="container flex pt-4">
-        <div className="w-full sm:w-[40rem]">
+        <div className="w-full md:w-[40rem]">
           {posts.map((post) => {
-            return <Post key={post.identifier} post={post} />;
+            return (
+              <Post
+                refetch={refetch}
+                setRefetch={setRefetch}
+                key={post.identifier}
+                post={post}
+              />
+            );
           })}
         </div>
         <HomeSidebar />

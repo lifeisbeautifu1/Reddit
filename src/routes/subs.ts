@@ -13,7 +13,7 @@ import {
 
 const router = Router();
 
-router.post('/', createSub);
+router.post('/', user, auth, createSub);
 
 router.get('/:name', user, getSub);
 

@@ -4,9 +4,11 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 
 import { ISub } from '../interfaces';
+import { useAuthState } from '../context/auth';
 
 const HomeSidebar = () => {
   const [topSubs, setTopSubs] = useState<ISub[]>([]);
+  const { authenticated } = useAuthState();
 
   useEffect(() => {
     async function fetchTopSubs() {
@@ -21,7 +23,7 @@ const HomeSidebar = () => {
   }, []);
 
   return (
-    <div className="ml-6 w-80">
+    <div className="hidden md:block ml-6 w-80">
       <div className="bg-white rounded">
         <div className="p-4 border-b-2">
           <p className="text-lg font-semibold text-center">Top Communities</p>
@@ -39,7 +41,7 @@ const HomeSidebar = () => {
                       src={sub?.imageUrl}
                       alt={sub?.name}
                       layout="fill"
-                      objectFit="cover"
+                      objectFit="contain"
                     />
                   </a>
                 </Link>
@@ -51,6 +53,13 @@ const HomeSidebar = () => {
             </div>
           ))}
         </div>
+        {authenticated && (
+          <div className="p-4 border-t-2">
+            <Link href="/subs/create">
+              <a className="w-full px-2 py-2 blue button">Create Community</a>
+            </Link>
+          </div>
+        )}
       </div>
     </div>
   );

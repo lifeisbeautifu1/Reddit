@@ -73,7 +73,12 @@ const Sub = () => {
     postMarkup = <p className="text-lg text-center">No posts submitted yet</p>;
   else
     postMarkup = sub.posts.map((post) => (
-      <Post key={post.identifier} post={post} />
+      <Post
+        refetch={refetch}
+        setRefetch={setRefetch}
+        key={post.identifier}
+        post={post}
+      />
     ));
   return (
     <>
@@ -102,7 +107,7 @@ const Sub = () => {
                     backgroundImage: `url(${sub.bannerUrl})`,
                     backgroundRepeat: 'no-repeat',
                     backgroundPosition: 'center',
-                    backgroundSize: 'cover',
+                    backgroundSize: 'contain',
                   }}
                 ></div>
               ) : (
@@ -119,6 +124,7 @@ const Sub = () => {
                       ownSub && 'cursor-pointer'
                     }`}
                     onClick={() => openFileInput('image')}
+                    objectFit="contain"
                     width={80}
                     height={80}
                   />
@@ -136,8 +142,8 @@ const Sub = () => {
           </div>
         </>
       )}
-      <div className="container flex pt-5">
-        {sub && <div className="w-[40rem]">{postMarkup}</div>}
+      <div className="container px-4 flex gap-4 flex-col-reverse md:flex-row pt-5">
+        {sub && <div className="w-full sm:w-[40rem]">{postMarkup}</div>}
         <Sidebar sub={sub!} />
       </div>
     </>

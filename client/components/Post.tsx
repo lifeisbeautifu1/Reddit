@@ -15,9 +15,11 @@ dayjs.extend(relativeTime);
 
 interface PostProps {
   post: IPost;
+  refetch?: boolean;
+  setRefetch?: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const Post: React.FC<PostProps> = ({ post }) => {
+const Post: React.FC<PostProps> = ({ post, refetch, setRefetch }) => {
   const router = useRouter();
   const { authenticated } = useAuthState();
   const vote = async (value: number) => {
@@ -31,7 +33,7 @@ const Post: React.FC<PostProps> = ({ post }) => {
         slug: post.slug,
         value,
       });
-      console.log(data);
+      if (setRefetch) setRefetch(!refetch);
     } catch (error) {
       console.log(error);
     }

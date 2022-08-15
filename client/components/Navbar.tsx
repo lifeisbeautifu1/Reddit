@@ -60,11 +60,11 @@ const Navbar = () => {
             <Image src={RedditLogo} alt="Reddit" />
           </a>
         </Link>
-        <span className="text-2xl font-semibold">
+        <span className="hidden lg:inline text-2xl font-semibold">
           <Link href="/">Reddit</Link>
         </span>
       </div>
-      <div className="relative items-center hidden bg-gray-100 border rounded lg:flex hover:border-blue-500 hover:bg-white">
+      <div className="w-full relative items-center bg-gray-100 border rounded flex hover:border-blue-500 max-w-[40rem] mx-4 hover:bg-white">
         <span className="pl-4 pr-3 text-gray-500">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -91,7 +91,7 @@ const Navbar = () => {
           placeholder="Search"
           value={name}
           onChange={(e) => setName(e.target.value)}
-          className="py-1 pr-3 bg-transparent rounded w-[40rem] focus:outline-none"
+          className="py-1 pr-3 bg-transparent rounded w-full focus:outline-none"
         />
         <div className="absolute left-0 right-0 bg-white top-[110%]">
           {subs?.map((sub) => (
@@ -117,7 +117,7 @@ const Navbar = () => {
       </div>
       {authenticated ? (
         <button
-          className="w-32 py-1 leading-5 hollow blue button"
+          className="w-20 md:w-32 py-1 leading-5 hollow blue button"
           onClick={logout}
         >
           Logout
@@ -126,10 +126,12 @@ const Navbar = () => {
         !loading && (
           <div className="flex gap-4">
             <Link href="/login">
-              <a className="w-32 py-1 leading-5 hollow blue button">Log In</a>
+              <a className="w-20 md:w-32 py-1 leading-5 hollow blue button">
+                Log In
+              </a>
             </Link>
             <Link href="/register">
-              <a className="w-32 py-1 leading-5 blue button">Sign Up</a>
+              <a className="w-20 md:w-32 py-1 leading-5 blue button">Sign Up</a>
             </Link>
           </div>
         )

@@ -94,7 +94,7 @@ const Login: NextPage = () => {
           </form>
           <small>
             Don't have an account?
-            <Link href="/login">
+            <Link href="/register">
               <a className="ml-1 text-blue-500 uppercase">Sign Up</a>
             </Link>
           </small>
