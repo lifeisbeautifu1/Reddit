@@ -11,6 +11,7 @@ export interface IPost {
   url: string;
   voteScore?: number;
   commentCount?: number;
+  comments?: IComment[];
   userVote?: number;
   sub?: ISub;
 }
