@@ -1,15 +1,48 @@
 import Link from 'next/link';
 import Image from 'next/image';
+import { useRouter } from 'next/router';
 import RedditLogo from '../images/reddit-logo.png';
-
-
-import { useAuthState } from '../context/auth';
-import { useAuthDispatch } from '../context/auth';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
 
+import { useAuthState, useAuthDispatch } from '../context/auth';
+import { ISub } from '../interfaces';
+
 const Navbar = () => {
+  const [name, setName] = useState('');
+  const [subs, setSubs] = useState<ISub[]>([]);
+  const [timer, setTimer] = useState<any>(null);
+
   const { authenticated, loading } = useAuthState();
   const dispatch = useAuthDispatch();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (name.trim() === '') {
+      setSubs([]);
+      return;
+    }
+    searchSubs();
+  }, [name]);
+
+  const searchSubs = async () => {
+    clearTimeout(timer);
+    setTimer(
+      setTimeout(async () => {
+        try {
+          const { data } = await axios.get('/subs/search/' + name);
+          setSubs(data);
+        } catch (error) {
+          console.log(error);
+        }
+      }, 250)
+    );
+  };
+
+  const goToSub = (subName: string) => {
+    router.push('/r/' + subName);
+    setName('');
+  };
 
   const logout = async () => {
     try {
@@ -31,7 +64,7 @@ const Navbar = () => {
           <Link href="/">Reddit</Link>
         </span>
       </div>
-      <div className="items-center hidden bg-gray-100 border rounded lg:flex hover:border-blue-500 hover:bg-white">
+      <div className="relative items-center hidden bg-gray-100 border rounded lg:flex hover:border-blue-500 hover:bg-white">
         <span className="pl-4 pr-3 text-gray-500">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -50,10 +83,37 @@ const Navbar = () => {
         </span>
 
         <input
+          onBlur={() => {
+            setSubs([]);
+            setName('');
+          }}
           type="text"
           placeholder="Search"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
           className="py-1 pr-3 bg-transparent rounded w-[40rem] focus:outline-none"
         />
+        <div className="absolute left-0 right-0 bg-white top-[110%]">
+          {subs?.map((sub) => (
+            <div
+              key={sub.name}
+              className="flex items-center px-4 py-3 cursor-pointer hover:bg-gray-200"
+              onClick={() => goToSub(sub.name)}
+            >
+              <Image
+                src={sub.imageUrl}
+                height={32}
+                width={32}
+                alt={sub.name}
+                className="rounded-full"
+              />
+              <div className="ml-4 text-sm">
+                <p className="font-medium">{sub.name}</p>
+                <p className="text-gray-600">{sub.title}</p>
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
       {authenticated ? (
         <button

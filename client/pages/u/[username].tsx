@@ -37,7 +37,7 @@ const UserPage = () => {
       </Head>
       {data && (
         <div className="container flex pt-5">
-          <div className=" w-full">
+          <div className="w-full">
             {data.submissions.map((s: any) => {
               if (s.type === 'Post') {
                 const post: IPost = s;

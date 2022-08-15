@@ -60,6 +60,18 @@ export const getSub = async (req: Request, res: Response) => {
   return res.json(sub);
 };
 
+export const searchSubs = async (req: Request, res: Response) => {
+  const { name } = req.params;
+  if (isEmpty(name)) res.status(400).json({ error: 'Name must not be empty' });
+  const subs = await AppDataSource.getRepository(Sub)
+    .createQueryBuilder()
+    .where('LOWER(name) LIKE :name', {
+      name: `${name.toLowerCase().trim()}%`,
+    })
+    .getMany();
+  res.json(subs);
+};
+
 export const upload = multer({
   storage: multer.diskStorage({
     destination: 'public/images',
