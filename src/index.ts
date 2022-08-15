@@ -24,6 +24,7 @@ app.use(express.json());
 app.use(morgan('dev'));
 app.use(trimMiddleware);
 app.use(cookieParser());
+app.use(express.static('public'));
 app.use(
   cors({
     credentials: true,
