@@ -16,10 +16,12 @@ dayjs.extend(relativeTime);
 interface PostProps {
   post: IPost;
   setPosts?: React.Dispatch<React.SetStateAction<IPost[]>>;
+  setRefetch?: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const Post: React.FC<PostProps> = ({ post, setPosts }) => {
+const Post: React.FC<PostProps> = ({ post, setPosts, setRefetch }) => {
   const router = useRouter();
+  const isInSubPage = router.pathname === `/r/[sub]`;
   const { authenticated } = useAuthState();
   const vote = async (value: number) => {
     if (!authenticated) {
@@ -38,6 +40,7 @@ const Post: React.FC<PostProps> = ({ post, setPosts }) => {
             return post.identifier === data.identifier ? data : post;
           })
         );
+      if (setRefetch) setRefetch((prevState) => !prevState);
     } catch (error) {
       console.log(error);
     }
@@ -71,20 +74,25 @@ const Post: React.FC<PostProps> = ({ post, setPosts }) => {
       </div>
       <div className="w-full p-2">
         <div className="flex items-center">
-          <Link href={`/r/${post.subName}`}>
-            <img
-              src="https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y"
-              alt={post.subName}
-              className="w-6 h-6 mr-1 rounded-full cursor-pointer"
-            />
-          </Link>
-          <Link href={`/r/${post.subName}`}>
-            <a className="text-xs font-bold cursor-pointer hover:underline">
-              /r/{post.subName}
-            </a>
-          </Link>
+          {!isInSubPage && (
+            <>
+              <Link href={`/r/${post.subName}`}>
+                <img
+                  src={post.sub?.imageUrl}
+                  alt={post.subName}
+                  className="w-6 h-6 mr-1 rounded-full cursor-pointer object-contain"
+                />
+              </Link>
+              <Link href={`/r/${post.subName}`}>
+                <a className="text-xs font-bold cursor-pointer hover:underline">
+                  /r/{post.subName}
+                </a>
+              </Link>
+              <span className="mx-1 text-xs text-gray-500">•</span>
+            </>
+          )}
+
           <p className="text-xs text-gray-500">
-            <span className="mx-1">•</span>
             Posted by{' '}
             <Link href={`/u/${post.username}`}>
               <a className="mx-1 hover:underline">/u/{post.username}</a>

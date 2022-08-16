@@ -24,6 +24,18 @@ class MyDocument extends Document {
             href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@100;200;300;400;500;600&display=swap"
             rel="stylesheet"
           />
+          <meta property="og:site_name" content="reddit" />
+          {/* <meta property="twitter:site" content="@readit" /> */}
+          <meta property="twitter:card" content="summary" />
+          <meta property="og:type" content="website" />
+          <meta
+            property="og:image"
+            content={`${process.env.NEXT_PUBLIC_CLIENT_BASE_URL}/favicon.ico`}
+          />
+          <meta
+            property="twitter:image"
+            content={`${process.env.NEXT_PUBLIC_CLIENT_BASE_URL}/favicon.ico`}
+          />
         </Head>
         <body className="font-body bg-[#dae0e6]">
           <Main />

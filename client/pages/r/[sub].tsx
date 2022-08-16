@@ -16,6 +16,7 @@ const Sub = () => {
   const { authenticated, user } = useAuthState();
 
   const router = useRouter();
+
   const fileInputRef = createRef<HTMLInputElement>();
   const subName = router.query.sub;
 
@@ -73,12 +74,7 @@ const Sub = () => {
     postMarkup = <p className="text-lg text-center">No posts submitted yet</p>;
   else
     postMarkup = sub.posts.map((post) => (
-      <Post
-        refetch={refetch}
-        setRefetch={setRefetch}
-        key={post.identifier}
-        post={post}
-      />
+      <Post setRefetch={setRefetch} key={post.identifier} post={post} />
     ));
   return (
     <>

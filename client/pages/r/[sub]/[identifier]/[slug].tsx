@@ -19,6 +19,15 @@ const PostPage = () => {
   const [refetch, setRefetch] = useState(false);
   const [newComment, setNewComment] = useState('');
 
+  const [description, setDescription] = useState('');
+
+  useEffect(() => {
+    if (!post) return;
+    let desc = post.body || post.title;
+    desc = desc.substring(0, 158).concat('..'); // Hello world..
+    setDescription(desc);
+  }, [post]);
+
   const { authenticated, user } = useAuthState();
 
   const router = useRouter();
@@ -77,6 +86,11 @@ const PostPage = () => {
     <>
       <Head>
         <title>{post?.title}</title>
+        <meta name="description" content={description}></meta>
+        <meta property="og:description" content={description} />
+        <meta property="og:title" content={post?.title} />
+        <meta property="twitter:description" content={description} />
+        <meta property="twitter:title" content={post?.title} />
       </Head>
       <Link href={`/r/${sub}`}>
         <a>

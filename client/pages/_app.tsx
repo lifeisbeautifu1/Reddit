@@ -6,7 +6,7 @@ import '../styles/globals.css';
 import { Navbar } from '../components';
 import { AuthProvider } from '../context/auth';
 axios.defaults.withCredentials = true;
-axios.defaults.baseURL = 'http://localhost:5000/api';
+axios.defaults.baseURL = process.env.NEXT_PUBLIC_SERVER_BASE_URL + '/api';
 
 function MyApp({ Component, pageProps }: AppProps) {
   const { pathname } = useRouter();
