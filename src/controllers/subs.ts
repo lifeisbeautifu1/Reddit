@@ -77,6 +77,7 @@ export const upload = multer({
     destination: 'public/images',
     filename: (req, file, callback) => {
       const name = makeId(15);
+
       callback(null, name + path.extname(file.originalname));
     },
   }),
@@ -89,6 +90,8 @@ export const upload = multer({
 
 export const uploadSubImage = async (req: Request, res: Response) => {
   const sub: Sub = res.locals.sub;
+
+  console.log(sub);
 
   const type = req.body.type;
 
@@ -115,4 +118,3 @@ export const uploadSubImage = async (req: Request, res: Response) => {
 
   return res.json(sub);
 };
-
