@@ -13,6 +13,8 @@ const Sub = () => {
   const [sub, setSub] = useState<ISub | null>(null);
   const [refetch, setRefetch] = useState(false);
 
+  console.log(sub);
+
   const { authenticated, user } = useAuthState();
 
   const router = useRouter();
@@ -69,9 +71,9 @@ const Sub = () => {
   };
 
   let postMarkup;
-  if (!sub) postMarkup = <p className="text-lg text-center">Loading...</p>;
+  if (!sub) postMarkup = <p className='text-lg text-center'>Loading...</p>;
   else if (sub.posts.length === 0)
-    postMarkup = <p className="text-lg text-center">No posts submitted yet</p>;
+    postMarkup = <p className='text-lg text-center'>No posts submitted yet</p>;
   else
     postMarkup = sub.posts.map((post) => (
       <Post setRefetch={setRefetch} key={post.identifier} post={post} />
@@ -84,7 +86,7 @@ const Sub = () => {
       {sub && (
         <>
           <input
-            type="file"
+            type='file'
             hidden={true}
             ref={fileInputRef}
             onChange={uploadImage}
@@ -96,41 +98,41 @@ const Sub = () => {
             >
               {sub.bannerUrl ? (
                 <div
-                  className={`h-56 ${
+                  className={`h-56  ${
                     !sub.bannerUrl ? 'bg-blue-500' : 'bg-white'
                   }`}
                   style={{
                     backgroundImage: `url(${sub.bannerUrl})`,
                     backgroundRepeat: 'no-repeat',
                     backgroundPosition: 'center',
-                    backgroundSize: 'contain',
+                    backgroundSize: 'cover',
                   }}
                 ></div>
               ) : (
-                <div className="h-20 bg-blue-500"></div>
+                <div className='h-20 bg-blue-500'></div>
               )}
             </div>
-            <div className="h-20 bg-white">
-              <div className="container relative flex">
-                <div className="absolute -top-4">
+            <div className='h-20 bg-white'>
+              <div className='container relative flex'>
+                <div className='absolute -top-4'>
                   <Image
                     src={sub.imageUrl}
-                    alt="Sub"
+                    alt='Sub'
                     className={`rounded-full object-cover ${
                       ownSub && 'cursor-pointer'
                     }`}
                     onClick={() => openFileInput('image')}
-                    objectFit="contain"
-                    objectPosition="center"
+                    objectFit='contain'
+                    objectPosition='center'
                     width={80}
                     height={80}
                   />
                 </div>
-                <div className="pt-1 pl-24">
-                  <div className="flex items-center">
-                    <h1 className="mb-1 text-3xl font-bold">{sub.title}</h1>
+                <div className='pt-1 pl-24'>
+                  <div className='flex items-center'>
+                    <h1 className='mb-1 text-3xl font-bold'>{sub.title}</h1>
                   </div>
-                  <p className="text-sm font-bold text-gray-500">
+                  <p className='text-sm font-bold text-gray-500'>
                     /r/{sub.name}
                   </p>
                 </div>
@@ -139,8 +141,8 @@ const Sub = () => {
           </div>
         </>
       )}
-      <div className="container px-4 flex gap-4 flex-col-reverse md:flex-row pt-5">
-        {sub && <div className="w-full sm:w-[40rem]">{postMarkup}</div>}
+      <div className='container px-4 flex gap-4 flex-col-reverse md:flex-row pt-5'>
+        {sub && <div className='w-full sm:w-[40rem]'>{postMarkup}</div>}
         <Sidebar sub={sub!} />
       </div>
     </>
